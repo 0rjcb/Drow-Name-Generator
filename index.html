@@ -549,7 +549,7 @@
     }
 
     function findInTable(table, rollValue) {
-        const found = table.find(item => item.roll === rollValue);
+        var found = table.find(function(item) { return item.roll === rollValue; });
         if (!found) {
             console.error('No entry found for roll ' + rollValue + ' in table');
         }
@@ -566,7 +566,7 @@
 
     function getSuffixText(suffixObj, gender) {
         if (!suffixObj) return { text: "", meaning: "" };
-        let text = "";
+        var text = "";
         if (gender === 'male' && suffixObj.masculine) {
             text = suffixObj.masculine;
         } else {
@@ -586,8 +586,7 @@
     }
 
     function formatInitialSuffix(suffixText) {
-        // Remove leading hyphen and capitalize first letter
-        const cleaned = suffixText.replace(/^[-_]/, '');
+        var cleaned = suffixText.replace(/^[-_]/, '');
         return capitalizeFirst(cleaned);
     }
 
@@ -608,19 +607,19 @@
 
     // Generate a single name using a chosen ruleset
     function generateSingleName(rulesetKey, gender) {
-        const isUnderdark = rulesetKey === 'underdark';
+        var isUnderdark = rulesetKey === 'underdark';
         
         if (isUnderdark) {
-            const ruleRoll = getRandomInt(1, 100);
-            const ruleDescription = getUnderdarkRuleDescription(ruleRoll);
+            var ruleRoll = getRandomInt(1, 100);
+            var ruleDescription = getUnderdarkRuleDescription(ruleRoll);
 
             if (ruleRoll <= 30) {
-                const pRoll = getRandomInt(1, 100);
-                const sRoll = getRandomInt(1, 100);
-                const p = findInTable(underdarkPrefixes, pRoll);
-                const s = findInTable(underdarkSuffixes, sRoll);
-                const pText = getPrefixText(p, gender);
-                const sForm = getSuffixText(s, gender);
+                var pRoll = getRandomInt(1, 100);
+                var sRoll = getRandomInt(1, 100);
+                var p = findInTable(underdarkPrefixes, pRoll);
+                var s = findInTable(underdarkSuffixes, sRoll);
+                var pText = getPrefixText(p, gender);
+                var sForm = getSuffixText(s, gender);
                 
                 return {
                     name: pText + sForm.text,
@@ -634,15 +633,15 @@
                     ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 70) {
-                const pRoll = getRandomInt(1, 100);
-                const s1Roll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
-                const p = findInTable(underdarkPrefixes, pRoll);
-                const s1 = findInTable(underdarkSuffixes, s1Roll);
-                const s2 = findInTable(underdarkSuffixes, s2Roll);
-                const pText = getPrefixText(p, gender);
-                const s1Form = getSuffixText(s1, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var pRoll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
+                var p = findInTable(underdarkPrefixes, pRoll);
+                var s1 = findInTable(underdarkSuffixes, s1Roll);
+                var s2 = findInTable(underdarkSuffixes, s2Roll);
+                var pText = getPrefixText(p, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
                 return {
                     name: pText + s1Form.text + s2Form.text,
@@ -657,20 +656,20 @@
                     ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 90) {
-                const p1Roll = getRandomInt(1, 100);
-                const s1Roll = getRandomInt(1, 100);
-                const p2Roll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
+                var p1Roll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var p2Roll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
                 
-                const p1 = findInTable(underdarkPrefixes, p1Roll);
-                const s1 = findInTable(underdarkSuffixes, s1Roll);
-                const p2 = findInTable(underdarkPrefixes, p2Roll);
-                const s2 = findInTable(underdarkSuffixes, s2Roll);
+                var p1 = findInTable(underdarkPrefixes, p1Roll);
+                var s1 = findInTable(underdarkSuffixes, s1Roll);
+                var p2 = findInTable(underdarkPrefixes, p2Roll);
+                var s2 = findInTable(underdarkSuffixes, s2Roll);
                 
-                const p1Text = getPrefixText(p1, gender);
-                const s1Form = getSuffixText(s1, gender);
-                const p2Text = getPrefixText(p2, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var p1Text = getPrefixText(p1, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var p2Text = getPrefixText(p2, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
                 return {
                     name: p1Text + s1Form.text,
@@ -692,24 +691,23 @@
                     }
                 };
             } else {
-                // Rule 91-100: Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + 2 suffixes
-                const s1Roll = getRandomInt(1, 100);
-                const pRoll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
-                const s3Roll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var pRoll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
+                var s3Roll = getRandomInt(1, 100);
                 
-                const s1 = findInTable(underdarkSuffixes, s1Roll);
-                const p = findInTable(underdarkPrefixes, pRoll);
-                const s2 = findInTable(underdarkSuffixes, s2Roll);
-                const s3 = findInTable(underdarkSuffixes, s3Roll);
+                var s1 = findInTable(underdarkSuffixes, s1Roll);
+                var p = findInTable(underdarkPrefixes, pRoll);
+                var s2 = findInTable(underdarkSuffixes, s2Roll);
+                var s3 = findInTable(underdarkSuffixes, s3Roll);
                 
-                const s1Form = getSuffixText(s1, gender);
-                const pText = getPrefixText(p, gender);
-                const s2Form = getSuffixText(s2, gender);
-                const s3Form = getSuffixText(s3, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var pText = getPrefixText(p, gender);
+                var s2Form = getSuffixText(s2, gender);
+                var s3Form = getSuffixText(s3, gender);
                 
-                const initialSuffix = formatInitialSuffix(s1Form.text);
-                const lowercasePrefix = lowercaseFirst(pText);
+                var initialSuffix = formatInitialSuffix(s1Form.text);
+                var lowercasePrefix = lowercaseFirst(pText);
 
                 return {
                     name: initialSuffix + "'" + lowercasePrefix + s2Form.text + s3Form.text,
@@ -726,17 +724,16 @@
                 };
             }
         } else {
-            // Dragon Magazine #267 ruleset logic (2e)
-            const ruleRoll = getRandomInt(1, 10);
-            const ruleDescription = getDragonRuleDescription(ruleRoll);
+            var ruleRoll = getRandomInt(1, 10);
+            var ruleDescription = getDragonRuleDescription(ruleRoll);
 
             if (ruleRoll <= 3) {
-                const pRoll = getRandomInt(1, 100);
-                const sRoll = getRandomInt(1, 100);
-                const p = findInTable(dragonPrefixes, pRoll);
-                const s = findInTable(dragonSuffixes, sRoll);
-                const pText = getPrefixText(p, gender);
-                const sForm = getSuffixText(s, gender);
+                var pRoll = getRandomInt(1, 100);
+                var sRoll = getRandomInt(1, 100);
+                var p = findInTable(dragonPrefixes, pRoll);
+                var s = findInTable(dragonSuffixes, sRoll);
+                var pText = getPrefixText(p, gender);
+                var sForm = getSuffixText(s, gender);
                 
                 return {
                     name: pText + sForm.text,
@@ -750,15 +747,15 @@
                     ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 5) {
-                const pRoll = getRandomInt(1, 100);
-                const s1Roll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
-                const p = findInTable(dragonPrefixes, pRoll);
-                const s1 = findInTable(dragonSuffixes, s1Roll);
-                const s2 = findInTable(dragonSuffixes, s2Roll);
-                const pText = getPrefixText(p, gender);
-                const s1Form = getSuffixText(s1, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var pRoll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
+                var p = findInTable(dragonPrefixes, pRoll);
+                var s1 = findInTable(dragonSuffixes, s1Roll);
+                var s2 = findInTable(dragonSuffixes, s2Roll);
+                var pText = getPrefixText(p, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
                 return {
                     name: pText + s1Form.text + s2Form.text,
@@ -773,17 +770,17 @@
                     ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 7) {
-                const pRoll = getRandomInt(1, 100);
-                const s1Roll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
+                var pRoll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
                 
-                const p = findInTable(dragonPrefixes, pRoll);
-                const s1 = findInTable(dragonSuffixes, s1Roll);
-                const s2 = findInTable(dragonSuffixes, s2Roll);
+                var p = findInTable(dragonPrefixes, pRoll);
+                var s1 = findInTable(dragonSuffixes, s1Roll);
+                var s2 = findInTable(dragonSuffixes, s2Roll);
                 
-                const pText = getPrefixText(p, gender);
-                const s1Form = getSuffixText(s1, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var pText = getPrefixText(p, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
                 return {
                     name: pText + s1Form.text + "'" + s2Form.text,
@@ -798,20 +795,20 @@
                     ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 9) {
-                const p1Roll = getRandomInt(1, 100);
-                const s1Roll = getRandomInt(1, 100);
-                const p2Roll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
+                var p1Roll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var p2Roll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
                 
-                const p1 = findInTable(dragonPrefixes, p1Roll);
-                const s1 = findInTable(dragonSuffixes, s1Roll);
-                const p2 = findInTable(dragonPrefixes, p2Roll);
-                const s2 = findInTable(dragonSuffixes, s2Roll);
+                var p1 = findInTable(dragonPrefixes, p1Roll);
+                var s1 = findInTable(dragonSuffixes, s1Roll);
+                var p2 = findInTable(dragonPrefixes, p2Roll);
+                var s2 = findInTable(dragonSuffixes, s2Roll);
                 
-                const p1Text = getPrefixText(p1, gender);
-                const s1Form = getSuffixText(s1, gender);
-                const p2Text = getPrefixText(p2, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var p1Text = getPrefixText(p1, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var p2Text = getPrefixText(p2, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
                 return {
                     name: p1Text + s1Form.text,
@@ -833,21 +830,20 @@
                     }
                 };
             } else {
-                // Roll 10: Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + suffix
-                const s1Roll = getRandomInt(1, 100);
-                const pRoll = getRandomInt(1, 100);
-                const s2Roll = getRandomInt(1, 100);
+                var s1Roll = getRandomInt(1, 100);
+                var pRoll = getRandomInt(1, 100);
+                var s2Roll = getRandomInt(1, 100);
                 
-                const s1 = findInTable(dragonSuffixes, s1Roll);
-                const p = findInTable(dragonPrefixes, pRoll);
-                const s2 = findInTable(dragonSuffixes, s2Roll);
+                var s1 = findInTable(dragonSuffixes, s1Roll);
+                var p = findInTable(dragonPrefixes, pRoll);
+                var s2 = findInTable(dragonSuffixes, s2Roll);
                 
-                const s1Form = getSuffixText(s1, gender);
-                const pText = getPrefixText(p, gender);
-                const s2Form = getSuffixText(s2, gender);
+                var s1Form = getSuffixText(s1, gender);
+                var pText = getPrefixText(p, gender);
+                var s2Form = getSuffixText(s2, gender);
                 
-                const initialSuffix = formatInitialSuffix(s1Form.text);
-                const lowercasePrefix = lowercaseFirst(pText);
+                var initialSuffix = formatInitialSuffix(s1Form.text);
+                var lowercasePrefix = lowercaseFirst(pText);
                 
                 return {
                     name: initialSuffix + "'" + lowercasePrefix + s2Form.text,
@@ -868,52 +864,60 @@
     // --- MAIN LOGIC ---
 
     function generateNames() {
-        const gender = document.getElementById('genderSelect').value;
-        const resultsDiv = document.getElementById('results');
+        var gender = document.getElementById('genderSelect').value;
+        var resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
 
-        for (let i = 0; i < 5; i++) {
-            const rulesetKey = Math.random() < 0.5 ? 'underdark' : 'dragon';
-            const data = generateSingleName(rulesetKey, gender);
+        for (var i = 0; i < 5; i++) {
+            var rulesetKey = Math.random() < 0.5 ? 'underdark' : 'dragon';
+            var data = generateSingleName(rulesetKey, gender);
             
-            const card = document.createElement('div');
+            var card = document.createElement('div');
             card.className = 'name-card';
             
-            let surnameHtml = '';
-if (data.surname) {
-    surnameHtml = '<div class="surname-section" style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 8px;">' +
-        '<span style="font-weight: bold; font-size: 1.1em;">' + data.surname.name + '</span>' +
-        '<div style="font-size: 0.9em; color: #555; line-height: 1.6; margin-top: 5px;">' +
-        '<ul style="margin: 0; padding-left: 20px;">' +
-        data.surname.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
-        '</ul></div>' +
-        '<div style="margin-top: 10px; font-style: italic; color: #777;">Meaning: ' + data.surname.meaning + '</div></div>';
-}
+            var surnameHtml = '';
+            if (data.surname) {
+                var surnameBreakdownItems = data.surname.breakdown.map(function(item) { 
+                    return '<li>' + item + '</li>'; 
+                }).join('');
+                
+                surnameHtml = '<div class="surname-section">' +
+                    '<span class="surname-name">' + data.surname.name + '</span>' +
+                    '<div class="breakdown" style="margin-top: 5px;">' +
+                    '<ul style="margin: 0; padding-left: 20px;">' + surnameBreakdownItems + '</ul></div>' +
+                    '<div class="meaning">Meaning: ' + data.surname.meaning + '</div></div>';
+            }
 
-card.innerHTML = '<div class="method-roll" style="font-size: 0.85em; color: #666; background-color: #e8f4fc; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; border-left: 3px solid #2383e0;">' +
-    '<strong style="color: #2383e0;">Ruleset:</strong> ' + data.ruleset + '<br>' +
-    '<strong style="color: #2383e0;">Method Roll:</strong> ' + data.ruleRoll + (data.ruleRoll > 10 ? '/100' : '/10') + ' → <em>' + data.ruleDescription + '</em>' +
-    '</div>' +
-    '<h3>Name ' + (i + 1) + '</h3>' +
-    '<span class="name">' + data.name + '</span>' +
-    '<div class="breakdown">' +
-    '<ul>' + data.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul>' +
-    '</div>' +
-    '<div class="meaning">Meaning: ' + data.meaning + '</div>' +
-    surnameHtml;
+            var breakdownItems = data.breakdown.map(function(item) { 
+                return '<li>' + item + '</li>'; 
+            }).join('');
+
+            var ruleMax = data.ruleRoll > 10 ? '/100' : '/10';
+
+            card.innerHTML = 
+                '<div class="method-roll">' +
+                '<strong>Ruleset:</strong> ' + data.ruleset + '<br>' +
+                '<strong>Method Roll:</strong> ' + data.ruleRoll + ruleMax + ' → <em>' + data.ruleDescription + '</em>' +
+                '</div>' +
+                '<h3>Name ' + (i + 1) + '</h3>' +
+                '<span class="name">' + data.name + '</span>' +
+                '<div class="breakdown">' +
+                '<ul>' + breakdownItems + '</ul>' +
+                '</div>' +
+                '<div class="meaning">Meaning: ' + data.meaning + '</div>' +
+                surnameHtml;
             
             resultsDiv.appendChild(card);
         }
     }
 
-    // Initialize - wire up button
+    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('generateBtn').addEventListener('click', generateNames);
-        generateNames(); // Generate one set on load
+        generateNames();
     });
 
 </script>
 
 </body>
-</html>
-				
+</html>				
