@@ -551,7 +551,7 @@
     function findInTable(table, rollValue) {
         const found = table.find(item => item.roll === rollValue);
         if (!found) {
-            console.error(`No entry found for roll ${rollValue} in table`);
+            console.error('No entry found for roll ' + rollValue + ' in table');
         }
         return found;
     }
@@ -615,7 +615,6 @@
             const ruleDescription = getUnderdarkRuleDescription(ruleRoll);
 
             if (ruleRoll <= 30) {
-                // Standard: 1 prefix, 1 suffix
                 const pRoll = getRandomInt(1, 100);
                 const sRoll = getRandomInt(1, 100);
                 const p = findInTable(underdarkPrefixes, pRoll);
@@ -624,18 +623,17 @@
                 const sForm = getSuffixText(s, gender);
                 
                 return {
-                    name: `${pText}${sForm.text}`,
+                    name: pText + sForm.text,
                     breakdown: [
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix: ${sForm.text} (1d100: ${sRoll}) - ${sForm.meaning}`
+                        "Prefix: " + pText + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix: " + sForm.text + " (1d100: " + sRoll + ") - " + sForm.meaning
                     ],
-                    meaning: `${p.meaning} | ${sForm.meaning}`,
-                    ruleset: 'Drow of the Underdark (3.5e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: p.meaning + " | " + sForm.meaning,
+                    ruleset: "Drow of the Underdark (3.5e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 70) {
-                // 1 prefix, 2 suffixes
                 const pRoll = getRandomInt(1, 100);
                 const s1Roll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -647,19 +645,18 @@
                 const s2Form = getSuffixText(s2, gender);
                 
                 return {
-                    name: `${pText}${s1Form.text}${s2Form.text}`,
+                    name: pText + s1Form.text + s2Form.text,
                     breakdown: [
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix 1: ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Suffix 2: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                        "Prefix: " + pText + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix 1: " + s1Form.text + " (1d100: " + s1Roll + ") - " + s1Form.meaning,
+                        "Suffix 2: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                     ],
-                    meaning: `${p.meaning} | ${s1Form.meaning} | ${s2Form.meaning}`,
-                    ruleset: 'Drow of the Underdark (3.5e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: p.meaning + " | " + s1Form.meaning + " | " + s2Form.meaning,
+                    ruleset: "Drow of the Underdark (3.5e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 90) {
-                // Two names (first name + surname)
                 const p1Roll = getRandomInt(1, 100);
                 const s1Roll = getRandomInt(1, 100);
                 const p2Roll = getRandomInt(1, 100);
@@ -676,22 +673,22 @@
                 const s2Form = getSuffixText(s2, gender);
                 
                 return {
-                    name: `${p1Text}${s1Form.text}`,
+                    name: p1Text + s1Form.text,
                     breakdown: [
-                        `Prefix: ${p1Text} (1d100: ${p1Roll}) - ${p1.meaning}`,
-                        `Suffix: ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`
+                        "Prefix: " + p1Text + " (1d100: " + p1Roll + ") - " + p1.meaning,
+                        "Suffix: " + s1Form.text + " (1d100: " + s1Roll + ") - " + s1Form.meaning
                     ],
-                    meaning: `${p1.meaning} | ${s1Form.meaning}`,
-                    ruleset: 'Drow of the Underdark (3.5e)',
-                    ruleRoll,
-                    ruleDescription,
+                    meaning: p1.meaning + " | " + s1Form.meaning,
+                    ruleset: "Drow of the Underdark (3.5e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription,
                     surname: {
-                        name: `${p2Text}${s2Form.text}`,
+                        name: p2Text + s2Form.text,
                         breakdown: [
-                            `Prefix: ${p2Text} (1d100: ${p2Roll}) - ${p2.meaning}`,
-                            `Suffix: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                            "Prefix: " + p2Text + " (1d100: " + p2Roll + ") - " + p2.meaning,
+                            "Suffix: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                         ],
-                        meaning: `${p2.meaning} | ${s2Form.meaning}`
+                        meaning: p2.meaning + " | " + s2Form.meaning
                     }
                 };
             } else {
@@ -711,22 +708,21 @@
                 const s2Form = getSuffixText(s2, gender);
                 const s3Form = getSuffixText(s3, gender);
                 
-                // Format: Capitalized suffix (no hyphen) + apostrophe + lowercase prefix + suffixes
                 const initialSuffix = formatInitialSuffix(s1Form.text);
                 const lowercasePrefix = lowercaseFirst(pText);
 
                 return {
-                    name: `${initialSuffix}'${lowercasePrefix}${s2Form.text}${s3Form.text}`,
+                    name: initialSuffix + "'" + lowercasePrefix + s2Form.text + s3Form.text,
                     breakdown: [
-                        `Suffix (initial): ${initialSuffix}' (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Prefix: ${lowercasePrefix} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix 1: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`,
-                        `Suffix 2: ${s3Form.text} (1d100: ${s3Roll}) - ${s3Form.meaning}`
+                        "Suffix (initial): " + initialSuffix + "' (1d100: " + s1Roll + ") - " + s1Form.meaning,
+                        "Prefix: " + lowercasePrefix + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix 1: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning,
+                        "Suffix 2: " + s3Form.text + " (1d100: " + s3Roll + ") - " + s3Form.meaning
                     ],
-                    meaning: `${s1Form.meaning} | ${p.meaning} | ${s2Form.meaning} | ${s3Form.meaning}`,
-                    ruleset: 'Drow of the Underdark (3.5e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: s1Form.meaning + " | " + p.meaning + " | " + s2Form.meaning + " | " + s3Form.meaning,
+                    ruleset: "Drow of the Underdark (3.5e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             }
         } else {
@@ -735,7 +731,6 @@
             const ruleDescription = getDragonRuleDescription(ruleRoll);
 
             if (ruleRoll <= 3) {
-                // Roll once on Table 2 and once on Table 3
                 const pRoll = getRandomInt(1, 100);
                 const sRoll = getRandomInt(1, 100);
                 const p = findInTable(dragonPrefixes, pRoll);
@@ -744,18 +739,17 @@
                 const sForm = getSuffixText(s, gender);
                 
                 return {
-                    name: `${pText}${sForm.text}`,
+                    name: pText + sForm.text,
                     breakdown: [
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix: ${sForm.text} (1d100: ${sRoll}) - ${sForm.meaning}`
+                        "Prefix: " + pText + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix: " + sForm.text + " (1d100: " + sRoll + ") - " + sForm.meaning
                     ],
-                    meaning: `${p.meaning} | ${sForm.meaning}`,
-                    ruleset: 'Dragon Magazine #267 (2e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: p.meaning + " | " + sForm.meaning,
+                    ruleset: "Dragon Magazine #267 (2e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 5) {
-                // Roll once on Table 2 and twice on Table 3
                 const pRoll = getRandomInt(1, 100);
                 const s1Roll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -767,19 +761,18 @@
                 const s2Form = getSuffixText(s2, gender);
                 
                 return {
-                    name: `${pText}${s1Form.text}${s2Form.text}`,
+                    name: pText + s1Form.text + s2Form.text,
                     breakdown: [
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix 1: ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Suffix 2: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                        "Prefix: " + pText + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix 1: " + s1Form.text + " (1d100: " + s1Roll + ") - " + s1Form.meaning,
+                        "Suffix 2: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                     ],
-                    meaning: `${p.meaning} | ${s1Form.meaning} | ${s2Form.meaning}`,
-                    ruleset: 'Dragon Magazine #267 (2e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: p.meaning + " | " + s1Form.meaning + " | " + s2Form.meaning,
+                    ruleset: "Dragon Magazine #267 (2e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 7) {
-                // Roll once on Table 2, once on Table 3, add apostrophe, roll again on Table 3
                 const pRoll = getRandomInt(1, 100);
                 const s1Roll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -793,19 +786,18 @@
                 const s2Form = getSuffixText(s2, gender);
                 
                 return {
-                    name: `${pText}${s1Form.text}'${s2Form.text}`,
+                    name: pText + s1Form.text + "'" + s2Form.text,
                     breakdown: [
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix (before '): ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Suffix (after '): ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                        "Prefix: " + pText + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix (before '): " + s1Form.text + " (1d100: " + s1Roll + ") - " + s1Form.meaning,
+                        "Suffix (after '): " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                     ],
-                    meaning: `${p.meaning} | ${s1Form.meaning} | ${s2Form.meaning}`,
-                    ruleset: 'Dragon Magazine #267 (2e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: p.meaning + " | " + s1Form.meaning + " | " + s2Form.meaning,
+                    ruleset: "Dragon Magazine #267 (2e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             } else if (ruleRoll <= 9) {
-                // Two names (first name + surname)
                 const p1Roll = getRandomInt(1, 100);
                 const s1Roll = getRandomInt(1, 100);
                 const p2Roll = getRandomInt(1, 100);
@@ -822,27 +814,26 @@
                 const s2Form = getSuffixText(s2, gender);
                 
                 return {
-                    name: `${p1Text}${s1Form.text}`,
+                    name: p1Text + s1Form.text,
                     breakdown: [
-                        `Prefix: ${p1Text} (1d100: ${p1Roll}) - ${p1.meaning}`,
-                        `Suffix: ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`
+                        "Prefix: " + p1Text + " (1d100: " + p1Roll + ") - " + p1.meaning,
+                        "Suffix: " + s1Form.text + " (1d100: " + s1Roll + ") - " + s1Form.meaning
                     ],
-                    meaning: `${p1.meaning} | ${s1Form.meaning}`,
-                    ruleset: 'Dragon Magazine #267 (2e)',
-                    ruleRoll,
-                    ruleDescription,
+                    meaning: p1.meaning + " | " + s1Form.meaning,
+                    ruleset: "Dragon Magazine #267 (2e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription,
                     surname: {
-                        name: `${p2Text}${s2Form.text}`,
+                        name: p2Text + s2Form.text,
                         breakdown: [
-                            `Prefix: ${p2Text} (1d100: ${p2Roll}) - ${p2.meaning}`,
-                            `Suffix: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                            "Prefix: " + p2Text + " (1d100: " + p2Roll + ") - " + p2.meaning,
+                            "Suffix: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                         ],
-                        meaning: `${p2.meaning} | ${s2Form.meaning}`
+                        meaning: p2.meaning + " | " + s2Form.meaning
                     }
                 };
             } else {
-                // Roll 10: Roll once on Table 3, add apostrophe, roll Table 2, roll Table 3
-                // Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + suffix
+                // Roll 10: Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + suffix
                 const s1Roll = getRandomInt(1, 100);
                 const pRoll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -855,21 +846,20 @@
                 const pText = getPrefixText(p, gender);
                 const s2Form = getSuffixText(s2, gender);
                 
-                // Format: Capitalized suffix (no hyphen) + apostrophe + lowercase prefix + suffix
                 const initialSuffix = formatInitialSuffix(s1Form.text);
                 const lowercasePrefix = lowercaseFirst(pText);
                 
                 return {
-                    name: `${initialSuffix}'${lowercasePrefix}${s2Form.text}`,
+                    name: initialSuffix + "'" + lowercasePrefix + s2Form.text,
                     breakdown: [
-                        `Suffix (initial): ${initialSuffix}' (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Prefix: ${lowercasePrefix} (1d100: ${pRoll}) - ${p.meaning}`,
-                        `Suffix: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
+                        "Suffix (initial): " + initialSuffix + "' (1d100: " + s1Roll + ") - " + s1Form.meaning,
+                        "Prefix: " + lowercasePrefix + " (1d100: " + pRoll + ") - " + p.meaning,
+                        "Suffix: " + s2Form.text + " (1d100: " + s2Roll + ") - " + s2Form.meaning
                     ],
-                    meaning: `${s1Form.meaning} | ${p.meaning} | \${s2Form.meaning}`,
-                    ruleset: 'Dragon Magazine #267 (2e)',
-                    ruleRoll,
-                    ruleDescription
+                    meaning: s1Form.meaning + " | " + p.meaning + " | " + s2Form.meaning,
+                    ruleset: "Dragon Magazine #267 (2e)",
+                    ruleRoll: ruleRoll,
+                    ruleDescription: ruleDescription
                 };
             }
         }
@@ -891,6 +881,39 @@
             
             let surnameHtml = '';
             if (data.surname) {
-                surnameHtml = `
-                <div class="surname-section">
-                    <span class="surname-name">\${data.surname.name
+                surnameHtml = '<div class="surname-section">' +
+                    '<span class="surname-name">' + data.surname.name + '</span>' +
+                    '<div class="breakdown" style="margin-top: 5px;">' +
+                    '<ul style="margin: 0; padding-left: 20px;">' +
+                    data.surname.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
+                    '</ul></div>' +
+                    '<div class="meaning">Meaning: ' + data.surname.meaning + '</div></div>';
+            }
+
+            card.innerHTML = '<div class="method-roll">' +
+                '<strong>Ruleset:</strong> ' + data.ruleset + '<br>' +
+                '<strong>Method Roll:</strong> ' + data.ruleRoll + (data.ruleRoll > 10 ? '/100' : '/10') + ' → <em>' + data.ruleDescription + '</em>' +
+                '</div>' +
+                '<h3>Name ' + (i + 1) + '</h3>' +
+                '<span class="name">' + data.name
+				'</span>' +
+                '<div class="breakdown">' +
+                '<ul>' + data.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul>' +
+                '</div>' +
+                '<div class="meaning">Meaning: ' + data.meaning + '</div>' +
+                surnameHtml;
+            
+            resultsDiv.appendChild(card);
+        }
+    }
+
+    // Initialize - wire up button
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('generateBtn').addEventListener('click', generateNames);
+        generateNames(); // Generate one set on load
+    });
+
+</script>
+
+</body>
+</html>
