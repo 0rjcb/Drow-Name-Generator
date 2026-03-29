@@ -580,6 +580,17 @@
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    function lowercaseFirst(str) {
+        if (!str) return "";
+        return str.charAt(0).toLowerCase() + str.slice(1);
+    }
+
+    function formatInitialSuffix(suffixText) {
+        // Remove leading hyphen and capitalize first letter
+        const cleaned = suffixText.replace(/^[-_]/, '');
+        return capitalizeFirst(cleaned);
+    }
+
     function getUnderdarkRuleDescription(ruleRoll) {
         if (ruleRoll <= 30) return "1 Prefix + 1 Suffix";
         if (ruleRoll <= 70) return "1 Prefix + 2 Suffixes";
@@ -684,7 +695,7 @@
                     }
                 };
             } else {
-                // Rule 91-100: Suffix (capitalized, no hyphen) + apostrophe + prefix + 2 suffixes
+                // Rule 91-100: Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + 2 suffixes
                 const s1Roll = getRandomInt(1, 100);
                 const pRoll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -700,15 +711,15 @@
                 const s2Form = getSuffixText(s2, gender);
                 const s3Form = getSuffixText(s3, gender);
                 
-                // Remove hyphen from initial suffix and capitalize
-                const s1Clean = s1Form.text.replace(/^[-_]/, '');
-                const s1Capitalized = capitalizeFirst(s1Clean);
+                // Format: Capitalized suffix (no hyphen) + apostrophe + lowercase prefix + suffixes
+                const initialSuffix = formatInitialSuffix(s1Form.text);
+                const lowercasePrefix = lowercaseFirst(pText);
 
                 return {
-                    name: `${s1Capitalized}'${pText}${s2Form.text}${s3Form.text}`,
+                    name: `${initialSuffix}'${lowercasePrefix}${s2Form.text}${s3Form.text}`,
                     breakdown: [
-                        `Suffix (initial): ${s1Capitalized}' (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
+                        `Suffix (initial): ${initialSuffix}' (1d100: ${s1Roll}) - ${s1Form.meaning}`,
+                        `Prefix: ${lowercasePrefix} (1d100: ${pRoll}) - ${p.meaning}`,
                         `Suffix 1: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`,
                         `Suffix 2: ${s3Form.text} (1d100: ${s3Roll}) - ${s3Form.meaning}`
                     ],
@@ -831,6 +842,7 @@
                 };
             } else {
                 // Roll 10: Roll once on Table 3, add apostrophe, roll Table 2, roll Table 3
+                // Suffix (capitalized, no hyphen) + apostrophe + prefix (lowercase) + suffix
                 const s1Roll = getRandomInt(1, 100);
                 const pRoll = getRandomInt(1, 100);
                 const s2Roll = getRandomInt(1, 100);
@@ -843,14 +855,18 @@
                 const pText = getPrefixText(p, gender);
                 const s2Form = getSuffixText(s2, gender);
                 
+                // Format: Capitalized suffix (no hyphen) + apostrophe + lowercase prefix + suffix
+                const initialSuffix = formatInitialSuffix(s1Form.text);
+                const lowercasePrefix = lowercaseFirst(pText);
+                
                 return {
-                    name: `${s1Form.text}'${pText}${s2Form.text}`,
+                    name: `${initialSuffix}'${lowercasePrefix}${s2Form.text}`,
                     breakdown: [
-                        `Suffix (initial): ${s1Form.text} (1d100: ${s1Roll}) - ${s1Form.meaning}`,
-                        `Prefix: ${pText} (1d100: ${pRoll}) - ${p.meaning}`,
+                        `Suffix (initial): ${initialSuffix}' (1d100: ${s1Roll}) - ${s1Form.meaning}`,
+                        `Prefix: ${lowercasePrefix} (1d100: ${pRoll}) - ${p.meaning}`,
                         `Suffix: ${s2Form.text} (1d100: ${s2Roll}) - ${s2Form.meaning}`
                     ],
-                    meaning: `${s1Form.meaning} | ${p.meaning} | ${s2Form.meaning}`,
+                    meaning: `${s1Form.meaning} | ${p.meaning} | \${s2Form.meaning}`,
                     ruleset: 'Dragon Magazine #267 (2e)',
                     ruleRoll,
                     ruleDescription
@@ -877,45 +893,4 @@
             if (data.surname) {
                 surnameHtml = `
                 <div class="surname-section">
-                    <span class="surname-name">${data.surname.name}</span>
-                    <div class="breakdown" style="margin-top: 5px;">
-                        <ul style="margin: 0; padding-left: 20px;">
-                            ${data.surname.breakdown.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div class="meaning">Meaning: ${data.surname.meaning}</div>
-                </div>
-                `;
-            }
-
-            card.innerHTML = `
-                <div class="method-roll">
-                    <strong>Ruleset:</strong> ${data.ruleset}<br>
-                    <strong>Method Roll:</strong> ${data.ruleRoll}${data.ruleRoll > 10 ? '/100' : '/10'} → <em>${data.ruleDescription}</em>
-                </div>
-                <h3>Name ${i + 1}</h3>
-                <span class="name">${data.name}</span>
-                <div class="breakdown">
-                    <strong>Component Breakdown:</strong>
-                    <ul>
-                        ${data.breakdown.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                </div>
-                <div class="meaning">Meaning: ${data.meaning}</div>
-                ${surnameHtml}
-            `;
-            
-            resultsDiv.appendChild(card);
-        }
-    }
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('generateBtn').addEventListener('click', generateNames);
-        generateNames();
-    });
-
-</script>
-
-</body>
-</html>
+                    <span class="surname-name">\${data.surname.name
