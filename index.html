@@ -880,27 +880,27 @@
             card.className = 'name-card';
             
             let surnameHtml = '';
-            if (data.surname) {
-                surnameHtml = '<div class="surname-section">' +
-                    '<span class="surname-name">' + data.surname.name + '</span>' +
-                    '<div class="breakdown" style="margin-top: 5px;">' +
-                    '<ul style="margin: 0; padding-left: 20px;">' +
-                    data.surname.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
-                    '</ul></div>' +
-                    '<div class="meaning">Meaning: ' + data.surname.meaning + '</div></div>';
-            }
+if (data.surname) {
+    surnameHtml = '<div class="surname-section" style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 8px;">' +
+        '<span style="font-weight: bold; font-size: 1.1em;">' + data.surname.name + '</span>' +
+        '<div style="font-size: 0.9em; color: #555; line-height: 1.6; margin-top: 5px;">' +
+        '<ul style="margin: 0; padding-left: 20px;">' +
+        data.surname.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') +
+        '</ul></div>' +
+        '<div style="margin-top: 10px; font-style: italic; color: #777;">Meaning: ' + data.surname.meaning + '</div></div>';
+}
 
-            card.innerHTML = '<div class="method-roll">' +
-                '<strong>Ruleset:</strong> ' + data.ruleset + '<br>' +
-                '<strong>Method Roll:</strong> ' + data.ruleRoll + (data.ruleRoll > 10 ? '/100' : '/10') + ' → <em>' + data.ruleDescription + '</em>' +
-                '</div>' +
-                '<h3>Name ' + (i + 1) + '</h3>' +
-                '<span class="name">' + data.name'</span>' +
-                '<div class="breakdown">' +
-                '<ul>' + data.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul>' +
-                '</div>' +
-                '<div class="meaning">Meaning: ' + data.meaning + '</div>' +
-                surnameHtml;
+card.innerHTML = '<div class="method-roll" style="font-size: 0.85em; color: #666; background-color: #e8f4fc; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; border-left: 3px solid #2383e0;">' +
+    '<strong style="color: #2383e0;">Ruleset:</strong> ' + data.ruleset + '<br>' +
+    '<strong style="color: #2383e0;">Method Roll:</strong> ' + data.ruleRoll + (data.ruleRoll > 10 ? '/100' : '/10') + ' → <em>' + data.ruleDescription + '</em>' +
+    '</div>' +
+    '<h3>Name ' + (i + 1) + '</h3>' +
+    '<span class="name">' + data.name + '</span>' +
+    '<div class="breakdown">' +
+    '<ul>' + data.breakdown.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul>' +
+    '</div>' +
+    '<div class="meaning">Meaning: ' + data.meaning + '</div>' +
+    surnameHtml;
             
             resultsDiv.appendChild(card);
         }
